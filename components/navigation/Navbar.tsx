@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <div className="sticky top-6 z-50 max-w-7xl mx-auto px-4 md:px-0 w-full animate-fade-in-up delay-header">
+    <div className="sticky top-6 z-40 max-w-7xl mx-auto px-4 md:px-0 w-full animate-fade-in-up delay-header">
       <header
         className="bg-zinc-950/80 border border-zinc-900 backdrop-blur-xl rounded-custom px-6 py-3 flex items-center justify-between shadow-2xl"
       >
@@ -14,10 +14,7 @@ export default function Navbar() {
           >
             AYUSH BARMAN
           </Link>
-          <span className="text-zinc-700">/</span>
-          <span className="text-zinc-500 uppercase tracking-widest font-mono text-xs hidden sm:inline">
-            FULL STACK DEVELOPER
-          </span>
+
         </div>
 
         <nav className="hidden md:flex items-center gap-8 font-mono">

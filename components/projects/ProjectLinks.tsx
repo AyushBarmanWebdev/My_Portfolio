@@ -12,14 +12,14 @@ export default function ProjectLinks({ source, demo }: ProjectLinksProps) {
         href={source}
         className="text-emerald-400 font-bold hover:underline"
       >
-        SOURCE.SH
+        SOURCE.GIT
       </Link>
       <span className="text-zinc-800">|</span>
       <Link
         href={demo}
         className="text-white hover:underline"
       >
-        DEPLOY_DEMO.EXE
+        LIVE_DEMO.EXE
       </Link>
     </div>
   );

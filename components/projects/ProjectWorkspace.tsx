@@ -4,8 +4,8 @@ import WorkspacePanel from "./WorkspacePanel";
 
 interface ProjectWorkspaceProps {
   project: Project;
-  activeWorkspaceTabId: "preview" | "impl" | "arch" | "metric";
-  onSelectWorkspaceTab: (id: "preview" | "impl" | "arch" | "metric") => void;
+  activeWorkspaceTabId: "ui" | "impl" | "arch" | "specs";
+  onSelectWorkspaceTab: (id: "ui" | "impl" | "arch" | "specs") => void;
 }
 
 export default function ProjectWorkspace({
@@ -16,22 +16,21 @@ export default function ProjectWorkspace({
   return (
     <div className="lg:col-span-5 border border-zinc-900 p-5 rounded-custom font-mono text-[10px] text-zinc-500 flex flex-col justify-between h-80 relative overflow-hidden select-none">
       {/* Header bar */}
-      <div className="flex justify-between border-b border-zinc-900 pb-2 mb-2.5">
-        <span>{project.workspaceTitle}</span>
-        <span>
+      <div className="flex border-b justify-between border-zinc-900 pb-2 mb-2.5">
+        {/* Tabs */}
+        <WorkspaceTabs
+          tabs={project.workspaceTabs}
+          activeTabId={activeWorkspaceTabId}
+          onSelectTab={onSelectWorkspaceTab}
+        />
+
+        <span className="pt-1">
           {project.workspaceVersionOrCost.label}: {project.workspaceVersionOrCost.value}
         </span>
       </div>
 
-      {/* Tabs */}
-      <WorkspaceTabs
-        tabs={project.workspaceTabs}
-        activeTabId={activeWorkspaceTabId}
-        onSelectTab={onSelectWorkspaceTab}
-      />
-
       {/* Dynamic Content Panel */}
-      <WorkspacePanel project={project} activeTabId={activeWorkspaceTabId} />
+      <WorkspacePanel key={project.id} project={project} activeTabId={activeWorkspaceTabId} />
 
       {/* Footer Metrics */}
       <div className="border-t border-zinc-900 pt-2 text-[8px] flex justify-between mt-2">

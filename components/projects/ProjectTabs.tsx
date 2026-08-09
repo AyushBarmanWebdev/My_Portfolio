@@ -35,7 +35,7 @@ export default function ProjectTabs({
                 aria-selected={isActive}
                 className={`flex items-center gap-2 px-4 py-3.5 border-r border-zinc-900 font-mono text-[11px] focus:outline-none transition-all cursor-pointer ${isActive
                   ? "bg-zinc-900/60 text-white border-b-2 border-b-emerald-400"
-                  : "text-zinc-500 hover:bg-zinc-900/30 hover:text-zinc-300"
+                  : "text-zinc-400 hover:bg-zinc-900/30 hover:text-zinc-300"
                   }`}
               >
                 <span className={project.fileExtensionColor}>
@@ -52,11 +52,11 @@ export default function ProjectTabs({
       {activeProject && (
         <div className="pr-4 py-2 hidden md:block shrink-0">
           {activeProject.headerStatus.isLive ? (
-            <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider bg-emerald-500/10 px-2 py-0.5 border border-emerald-500/20 rounded">
+            <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider bg-emerald-500/10 px-2 py-0.5 border border-emerald-500/20 rounded">
               {activeProject.headerStatus.text}
             </span>
           ) : (
-            <span className="text-[9px] text-zinc-550 font-bold uppercase tracking-wider bg-zinc-900 px-2 py-0.5 border border-zinc-800 rounded">
+            <span className="text-[10px] text-zinc-550 font-bold uppercase tracking-wider bg-zinc-900 px-2 py-0.5 border border-zinc-800 rounded">
               {activeProject.headerStatus.text}
             </span>
           )}

@@ -6,7 +6,7 @@ export default function ProjectsHeader() {
         <span className="h-px bg-zinc-900 flex-grow"></span>
       </div>
       <h2 className="text-4xl md:text-5xl lg:text-[3rem] font-extrabold text-white tracking-tight leading-none">
-        Selected Projects
+        Featured Projects
       </h2>
     </div>
   );

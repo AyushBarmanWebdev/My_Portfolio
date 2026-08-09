@@ -17,8 +17,8 @@ export default function ProjectContent({ project }: ProjectContentProps) {
 
       {/* Architecture Highlights */}
       <div className="border-t border-b border-zinc-900 py-4 my-4">
-        <span className="font-mono text-[10px] text-zinc-500 block mb-3 uppercase tracking-wider">
-          {"// ARCHITECTURE HIGHLIGHTS"}
+        <span className="font-mono text-[11px] text-zinc-500 block mb-3 uppercase tracking-wider">
+          {"// ENGINEERING NOTES"}
         </span>
         <ul className="space-y-2 text-zinc-400 text-xs font-light">
           {project.architectureHighlights.map((highlight, idx) => (

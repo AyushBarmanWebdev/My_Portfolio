@@ -1,5 +1,5 @@
 export interface WorkspaceTab {
-  id: "preview" | "impl" | "arch" | "metric";
+  id: "ui" | "impl" | "arch" | "specs";
   label: string;
   extension: string;
   extensionColor: string;
@@ -15,34 +15,30 @@ export interface TokenLine {
   tokens: Token[];
 }
 
-export interface PreviewContent {
-  headerLeft: string;
-  headerRight: string;
-  headerRightColor: string;
-  lines: string[];
-  card?: {
-    name: string;
-    bio: string;
-    subText: string;
-  };
-  footerLeft: string;
-  footerRight: string;
+export interface PreviewImage {
+  src: string;
+  alt: string;
+  label: string;
 }
 
-export interface MetricItem {
+export interface PreviewContent {
+  images: PreviewImage[];
+}
+
+export interface SpecItem {
   label: string;
   value: string;
-  isAccent: boolean;
+  isAccent?: boolean;
 }
 
 export interface WorkspaceContent {
-  preview: PreviewContent;
+  ui: PreviewContent;
   impl: TokenLine[];
   arch: {
     title: string;
     lines: TokenLine[];
   };
-  metric: MetricItem[];
+  specs: SpecItem[];
 }
 
 export interface Project {
@@ -62,7 +58,6 @@ export interface Project {
     text: string;
     isLive: boolean;
   };
-  workspaceTitle: string;
   workspaceVersionOrCost: {
     label: string;
     value: string;
@@ -78,376 +73,529 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "json",
-    fileName: "json_workshop_parser.rs",
-    fileExtension: "rs",
-    fileExtensionColor: "text-rose-400",
-    title: "JSON Workshop",
-    description: "A high-performance web utility built to parse, query, and validate massive JSON files on the client side. By writing a custom Rust parser compiled to WebAssembly (WASM), we sidestep standard JavaScript main-thread blocking loops.",
+    fileName: "json_workshop.tsx",
+    fileExtension: "tsx",
+    fileExtensionColor: "text-blue-400",
+    title: "JSON Workshop - Formatter & Validator",
+    description: "A modern developer tool for formatting, validating, and inspecting JSON with a clean editor-first experience. Built with Astro, Monaco Editor, and Tailwind CSS, focusing on speed, usability, and polished developer workflows.",
     architectureHighlights: [
-      "Multi-threaded Web Workers parsing 50MB files under 100ms.",
-      "Zero garbage collection latency spikes using WASM memory allocations.",
-      "Fast JSON schema trees parsing paths without full AST reconstruction.",
+      "Monaco Editor integration with a custom developer-focused interface.",
+      "Client-side JSON formatting and validation with instant feedback.",
+      "Modular Astro component architecture for scalable feature development."
     ],
-    technologies: ["RUST / WASM", "NEXT.JS 15", "WEB WORKERS", "TAILWIND"],
+    technologies: ["ASTRO", "MONACO_EDITOR", "TAILWIND_CSS", "TYPESCRIPT"],
     links: {
-      source: "#",
-      demo: "#",
+      source: "https://github.com/AyushBarmanWebdev/JSON-Workshop",
+      demo: "https://jsonworkshop.com/",
     },
     headerStatus: {
-      text: "LIVE_DEPLOYED",
+      text: "LIVE",
       isLive: true,
     },
-    workspaceTitle: "WASM_BUFFER",
     workspaceVersionOrCost: {
       label: "VER",
-      value: "1.0.4",
+      value: "1.0",
     },
     workspaceTabs: [
-      { id: "preview", label: "PREVIEW", extension: "rs", extensionColor: "text-rose-400" },
-      { id: "impl", label: "CODE", extension: "rs", extensionColor: "text-rose-400" },
-      { id: "arch", label: "ARCHITECTURE", extension: "rs", extensionColor: "text-rose-400" },
-      { id: "metric", label: "METRIC", extension: "rs", extensionColor: "text-rose-400" },
+      { id: "ui", label: "UI", extension: "tsx", extensionColor: "text-blue-400" },
+      { id: "impl", label: "IMPLEMENTATION", extension: "tsx", extensionColor: "text-blue-400" },
+      { id: "arch", label: "ARCHITECTURE", extension: "tsx", extensionColor: "text-blue-400" },
+      { id: "specs", label: "SPECS", extension: "tsx", extensionColor: "text-blue-400" },
     ],
     workspaceContent: {
-      preview: {
-        headerLeft: "PARSER_UI: ACTIVE",
-        headerRight: "READY",
-        headerRightColor: "text-emerald-400",
-        lines: [
-          "▼ root",
-          '  "status": "success",',
-          '  "latency": "0.08ms",',
-          '  ▼ "bufferAllocations": [',
-          '    {"id": 0, "size": "12.4kb", "active": true},',
-          '    {"id": 1, "size": "500MB", "active": false}',
-          "  ]",
+      ui: {
+        images: [
+          {
+            src: "/projects/json-workshop/favicon.svg",
+            alt: "JSON Workshop",
+            label: "Favicon"
+          },
+          {
+            src: "/projects/json-workshop/home.png",
+            alt: "Home",
+            label: "Home"
+          },
+          {
+            src: "/projects/json-workshop/contact.png",
+            alt: "Contact",
+            label: "Contact"
+          },
+          {
+            src: "/projects/json-workshop/about.png",
+            alt: "About",
+            label: "About"
+          },
+          {
+            src: "/projects/json-workshop/privacy-policy.png",
+            alt: "Privacy Policy",
+            label: "Privacy Policy"
+          },
+          {
+            src: "/projects/json-workshop/terms.png",
+            alt: "Terms",
+            label: "Terms"
+          },
         ],
-        footerLeft: "FPS: 60.00",
-        footerRight: "NODES: 1,402",
       },
       impl: [
         {
           tokens: [
-            { text: "pub fn ", className: "text-emerald-500" },
-            { text: "alloc_wasm_heap", className: "text-teal-400" },
-            { text: "(len: usize) {" }
+            { text: "const ", className: "text-rose-400" },
+            { text: "value = ", className: "text-zinc-400" },
+            { text: "JSON.parse", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "editor.getValue", className: "text-zinc-400" },
+            { text: "()", className: "text-amber-400" },
+            { text: ");", className: "text-amber-400" }
           ]
         },
         {
-          indent: 4,
-          tokens: [{ text: "let mut ptr = Vec::with_capacity(len);" }]
+          tokens: [
+            { text: "const ", className: "text-rose-400" },
+            { text: "formatted = ", className: "text-zinc-400" },
+            { text: "JSON.stringify", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "value, null, 2", className: "text-zinc-400" },
+            { text: ");", className: "text-amber-400" }
+          ]
         },
         {
-          indent: 4,
-          tokens: [{ text: "// Prevent standard allocations", className: "text-zinc-700" }]
+          tokens: [
+            { text: "editor.setValue", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "formatted", className: "text-zinc-400" },
+            { text: ");", className: "text-amber-400" }
+          ]
         },
         {
-          indent: 4,
-          tokens: [{ text: "let raw = ptr.as_mut_ptr();" }]
-        },
-        {
-          indent: 4,
-          tokens: [{ text: "std::mem::forget(ptr);" }]
-        },
-        {
-          indent: 4,
-          tokens: [{ text: "raw" }]
-        },
-        {
-          tokens: [{ text: "}" }]
+          tokens: [
+            { text: "// Validate before applying changes", className: "text-zinc-600" }
+          ]
         }
       ],
       arch: {
-        title: "// SYSTEM DATA STREAM",
+        title: "// REQUEST / DATA FLOW",
         lines: [
           {
             tokens: [
-              { text: "Browser File UI", className: "text-white font-bold" },
-              { text: " ───► ", className: "text-zinc-800" },
-              { text: "Worker Thread", className: "text-emerald-400 font-bold" }
+              { text: "User Input", className: "text-white font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "Monaco Editor", className: "text-blue-400 font-bold" },
             ]
           },
           {
-            indent: 14,
-            tokens: [{ text: "│ (WASM heap pipeline)", className: "text-zinc-700" }]
-          },
-          {
-            indent: 14,
-            tokens: [{ text: "▼", className: "text-zinc-700" }]
-          },
-          {
+            indent: 34,
             tokens: [
-              { text: "Rust Parser", className: "text-emerald-400 font-bold" },
-              { text: " ──────► ", className: "text-zinc-800" },
-              { text: "Validation Tree AST", className: "text-white font-bold" }
+              { text: "├──► ", className: "text-zinc-700" },
+              { text: "JSON Formatter", className: "text-emerald-400 font-bold" }
+            ]
+          },
+          {
+            indent: 34,
+            tokens: [
+              { text: "└──► ", className: "text-zinc-700" },
+              { text: "JSON Validator", className: "text-emerald-400 font-bold" }
+            ]
+          },
+          {
+            indent: 54,
+            tokens: [
+              { text: "│" },
+              { text: " Validation Result", className: "text-zinc-400" }
+            ]
+          },
+          {
+            indent: 54,
+            tokens: [
+              { text: "▼" }
+            ]
+          },
+          {
+            indent: 44,
+            tokens: [
+              { text: "Editor Feedback", className: "text-white font-bold" }
             ]
           }
-        ],
+        ]
       },
-      metric: [
-        { label: "Lighthouse Perf", value: "100 / 100", isAccent: true },
-        { label: "Parsing speed", value: "500MB/sec", isAccent: false },
-        { label: "Accessibility", value: "100 / 100", isAccent: true },
-        { label: "WASM Size", value: "12.4kb", isAccent: false },
+      specs: [
+        { label: "TYPE", value: "DEVELOPER_TOOL", isAccent: true },
+        { label: "FRAMEWORK", value: "ASTRO", isAccent: true },
+        { label: "EDITOR", value: "MONACO_EDITOR", isAccent: true },
+        { label: "VALIDATION", value: "CLIENT_SIDE", isAccent: true },
+        { label: "STATUS", value: "LIVE", isAccent: true },
       ],
     },
     footerMetrics: {
-      left: "ALLOCS: ZERO_OVERHEAD",
-      right: "GC: DISABLED",
+      left: "FORMATTER: READY",
+      right: "EDITOR: MONACO",
     },
   },
   {
     id: "codebook",
-    fileName: "codebook_compiler.tsx",
-    fileExtension: "tsx",
-    fileExtensionColor: "text-blue-400",
-    title: "CodeBook",
-    description: "An interactive shared developer workspace and sandboxed compilation environment. Built to help teams pair program concurrently and test JS/TypeScript execution in real time.",
+    fileName: "codebook_compiler.html",
+    fileExtension: "html",
+    fileExtensionColor: "text-rose-400",
+    title: "CodeBook - Handwriting Online Compiler",
+    description: "An online code editor supporting both typing and handwriting input. Users can write code on a digital canvas, convert handwriting to source code using OCR, and execute programs directly in the browser.",
     architectureHighlights: [
-      "ESBuild WASM engine performing bundle compiles in the client under 15ms.",
-      "WebSockets syncing document state changes with < 8ms peer latency.",
-      "Secure postMessage sandbox execution context inside framed pages.",
+      "Canvas-based handwriting input powered by OCR recognition.",
+      "Judge0 API integration for multi-language code execution.",
+      "Interactive editor supporting typing and handwritten workflows."
     ],
-    technologies: ["ESBUILD WASM", "WEBSOCKETS", "REACT", "POSTGRES"],
+    technologies: ["HTML/CSS", "JAVASCRIPT", "TAILWIND_CSS", "NODE", "JUDGE0_API", "OCR"],
     links: {
-      source: "#",
-      demo: "#",
+      source: "https://github.com/AyushBarmanWebdev/codebook-mvp",
+      demo: "https://codebook-5glo.onrender.com/",
     },
     headerStatus: {
-      text: "LIVE_DEPLOYED",
+      text: "LIVE",
       isLive: true,
     },
-    workspaceTitle: "COMPILER_BUNDLE",
     workspaceVersionOrCost: {
-      label: "STATE",
-      value: "IDLE",
+      label: "VER",
+      value: "1.0.1",
     },
     workspaceTabs: [
-      { id: "preview", label: "PREVIEW", extension: "tsx", extensionColor: "text-blue-400" },
-      { id: "impl", label: "CODE", extension: "tsx", extensionColor: "text-blue-400" },
-      { id: "arch", label: "ARCHITECTURE", extension: "tsx", extensionColor: "text-blue-400" },
-      { id: "metric", label: "METRIC", extension: "tsx", extensionColor: "text-blue-400" },
+      { id: "ui", label: "UI", extension: "html", extensionColor: "text-rose-400" },
+      { id: "impl", label: "IMPLEMENTATION", extension: "html", extensionColor: "text-rose-400" },
+      { id: "arch", label: "ARCHITECTURE", extension: "html", extensionColor: "text-rose-400" },
+      { id: "specs", label: "SPECS", extension: "html", extensionColor: "text-rose-400" },
     ],
     workspaceContent: {
-      preview: {
-        headerLeft: "COMPILER_CONSOLE: LIVE",
-        headerRight: "READY",
-        headerRightColor: "text-blue-400",
-        lines: [
-          "> npm run compile",
-          "Target: esbuild_engine.wasm",
-          "✔ Bundled 14 files into bundle.js [15ms]",
-          "> starting websocket channel...",
-          "✔ Sync active: 2 active clients",
-        ],
-        footerLeft: "PEERS: 02",
-        footerRight: "STATE: SYNCED",
+      ui: {
+        images: [
+          {
+            src: "/projects/codebook/android-chrome-512x512.png",
+            alt: "Codebook Icon",
+            label: "Icon"
+          },
+          {
+            src: "/projects/codebook/Screenshot 2026-04-07 132536.png",
+            alt: "Langauge Selection",
+            label: "Languages"
+          },
+          {
+            src: "/projects/codebook/Screenshot 2026-04-07 132606.png",
+            alt: "Compiler",
+            label: "Editor"
+          }
+        ]
       },
       impl: [
         {
           tokens: [
-            { text: "import ", className: "text-emerald-500" },
-            { text: "{ bundle } " },
-            { text: "from ", className: "text-emerald-500" },
-            { text: "'esbuild-wasm'", className: "text-teal-400" },
-            { text: ";" }
+            { text: "const ", className: "text-rose-400" },
+            { text: "recognizedText = ", className: "text-zinc-400" },
+            { text: "await ", className: "text-rose-400" },
+            { text: "recognizeCode", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "canvas", className: "text-zinc-400" },
+            { text: ");", className: "text-amber-400" }
           ]
         },
         {
           tokens: [
-            { text: "async fn ", className: "text-rose-500" },
-            { text: "build(code: string) {" }
+            { text: "setCode", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "recognizedText", className: "text-zinc-400" },
+            { text: ")", className: "text-amber-400" }
           ]
         },
         {
-          indent: 4,
           tokens: [
-            { text: "const out = " },
-            { text: "await ", className: "text-emerald-500" },
-            { text: "bundle({" }
+            { text: "// Submit source to Judge0", className: "text-zinc-600" }
           ]
         },
         {
-          indent: 8,
           tokens: [
-            { text: "entry: " },
-            { text: "'index.js'", className: "text-teal-400" },
-            { text: "," }
+            { text: "const ", className: "text-rose-400" },
+            { text: "result = ", className: "text-zinc-400" },
+            { text: "await ", className: "text-rose-400" },
+            { text: "executeCode", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "code, language", className: "text-zinc-400" },
+            { text: ");", className: "text-amber-400" },
           ]
-        },
-        {
-          indent: 8,
-          tokens: [{ text: "minify: true," }]
-        },
-        {
-          indent: 4,
-          tokens: [{ text: "});" }]
-        },
-        {
-          indent: 4,
-          tokens: [
-            { text: "return ", className: "text-emerald-500" },
-            { text: "out.code;" }
-          ]
-        },
-        {
-          tokens: [{ text: "}" }]
         }
       ],
       arch: {
-        title: "// SYSTEM DATA STREAM",
+        title: "// CODE EXECUTION FLOW",
         lines: [
           {
             tokens: [
-              { text: "Workspace UI", className: "text-white font-bold" },
-              { text: " ───► ", className: "text-zinc-800" },
-              { text: "WebSocket sync", className: "text-emerald-400 font-bold" },
-              { text: " ◄──► ", className: "text-zinc-800" },
-              { text: "Peers", className: "text-white font-bold" }
+              { text: "User", className: "text-white font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "Select Language", className: "text-emerald-400 font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "Input Mode", className: "text-white font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: " Handwriting ", className: "text-emerald-400 font-bold" },
+            ],
+          },
+          {
+            indent: 56,
+            tokens: [
+              { text: "│", className: "text-zinc-700" },
+              { text: "                  │", className: "text-zinc-700" },
             ]
           },
           {
-            indent: 12,
-            tokens: [{ text: "│ (Realtime synchrony)", className: "text-zinc-700" }]
-          },
-          {
-            indent: 12,
-            tokens: [{ text: "▼", className: "text-zinc-700" }]
-          },
-          {
+            indent: 56,
             tokens: [
-              { text: "WASM ESBuild", className: "text-emerald-400 font-bold" },
-              { text: " ───► ", className: "text-zinc-800" },
-              { text: "Framed Sandbox", className: "text-white font-bold" }
+              { text: "▼", className: "text-zinc-700" },
+              { text: "                 ▼", className: "text-zinc-700" },
+            ]
+          },
+          {
+            indent: 54,
+            tokens: [
+              { text: "Typing", className: "text-emerald-400 font-bold" },
+              { text: "   ───►    ", className: "text-zinc-700" },
+              { text: "OCR", className: "text-white font-bold" },
+            ]
+          },
+          {
+            indent: 82,
+            tokens: [
+              { text: "│", className: "text-zinc-700" },
+            ]
+          },
+          {
+            indent: 82,
+            tokens: [
+              { text: "▼", className: "text-zinc-700" },
+            ]
+          },
+          {
+            indent: 3,
+            tokens: [
+              { text: "Output ", className: "text-emerald-400 font-bold" },
+              { text: " ◄─── ", className: "text-zinc-700" },
+              { text: "Judge0 API ", className: "text-white font-bold" },
+              { text: " ◄─── ", className: "text-zinc-700" },
+              { text: "Execution ", className: "text-white font-bold" },
+              { text: " ◄─── ", className: "text-zinc-700" },
+              { text: "Source Code", className: "text-emerald-400 font-bold" },
             ]
           }
         ],
       },
-      metric: [
-        { label: "Sync Latency", value: "< 8ms", isAccent: true },
-        { label: "Compile Time", value: "14.2ms", isAccent: false },
-        { label: "Concurrent Limit", value: "5,000 / node", isAccent: false },
-        { label: "Lighthouse Perf", value: "98 / 100", isAccent: true },
+      specs: [
+        { label: "TYPE", value: "COMPILER", isAccent: true },
+        { label: "FRAMEWORK", value: "HTML_CSS_JAVASCRIPT", isAccent: true },
+        { label: "INPUT", value: "TYPING_AND_HANDWRITING", isAccent: true },
+        { label: "EDITOR", value: "CANVAS_API", isAccent: true },
+        { label: "LANGUAGES", value: "14+", isAccent: true },
+        { label: "OCR", value: "TESSERACT.JS", isAccent: true },
+        { label: "EXECUTION", value: "JUDGE0_API", isAccent: true },
+        { label: "STATUS", value: "LIVE", isAccent: true },
       ],
     },
     footerMetrics: {
-      left: "BUNDLER: ACTIVE",
-      right: "LATENCY: 14.2ms",
+      left: "OCR: READY",
+      right: "EXECUTER: ONLINE",
     },
   },
   {
     id: "linkedin",
-    fileName: "linkedin_feed_indexing.sql",
-    fileExtension: "sql",
+    fileName: "linkedin_ui_enhanced.jsx",
+    fileExtension: "jsx",
     fileExtensionColor: "text-amber-400",
-    title: "LinkedIn Clone",
-    description: "A full-stack network replication model built to evaluate feed distribution queries. Focuses on cache warming pipelines and relational indices to test fetch performance limits under simulated user structures.",
+    title: "LinkedIn UI (Enhanced)",
+    description: "A responsive LinkedIn-inspired social platform built to practice full-stack application architecture, authentication, feeds, reusable UI systems, and scalable component design.",
     architectureHighlights: [
-      "PostgreSQL indexes reducing feed retrieval query times to 18ms.",
-      "Redis cache warming strategies achieving a 96.8% key hit ratio.",
-      "Concurrent client connection pipelines using Express socket listeners.",
+      "JWT authentication and protected application routes.",
+      "REST APIs for posts, comments, likes, and user management.",
+      "Reusable React component architecture with responsive layouts."
     ],
-    technologies: ["POSTGRESQL", "REDIS CACHE", "EXPRESS NODE", "REACT"],
+    technologies: ["REACT", "TAILWIND_CSS", "EXPRESS", "NODE", "MONGO_DB", "JWT_AUTHENTICATION"],
     links: {
-      source: "#",
-      demo: "#",
+      source: "https://github.com/AyushBarmanWebdev/LinkedIn-UI",
+      demo: "https://linked-in-ui.vercel.app/",
     },
     headerStatus: {
-      text: "SANDBOX_STAGING",
-      isLive: false,
+      text: "LIVE",
+      isLive: true,
     },
-    workspaceTitle: "DB_QUERY_ANALYZE",
     workspaceVersionOrCost: {
-      label: "COST",
-      value: "0.15",
+      label: "VER",
+      value: "1.0",
     },
     workspaceTabs: [
-      { id: "preview", label: "PREVIEW", extension: "sql", extensionColor: "text-amber-400" },
-      { id: "impl", label: "CODE", extension: "sql", extensionColor: "text-amber-400" },
-      { id: "arch", label: "ARCHITECTURE", extension: "sql", extensionColor: "text-amber-400" },
-      { id: "metric", label: "METRIC", extension: "sql", extensionColor: "text-amber-400" },
+      { id: "ui", label: "UI", extension: "jsx", extensionColor: "text-amber-400" },
+      { id: "impl", label: "IMPLEMENTATION", extension: "jsx", extensionColor: "text-amber-400" },
+      { id: "arch", label: "ARCHITECTURE", extension: "jsx", extensionColor: "text-amber-400" },
+      { id: "specs", label: "SPECS", extension: "jsx", extensionColor: "text-amber-400" },
     ],
     workspaceContent: {
-      preview: {
-        headerLeft: "FEED_COMPILER: ACTIVE",
-        headerRight: "SANDBOX",
-        headerRightColor: "text-amber-400",
-        lines: ["[User Feed compilation trace]"],
-        card: {
-          name: "@Ayush Barman",
-          bio: "Full Stack Developer With Design Engineering...",
-          subText: "1h · postgres_indexing=enabled",
-        },
-        footerLeft: "INDEX_HITS: 96.8%",
-        footerRight: "RECORDS: 1M",
+      ui: {
+        images: [
+          {
+            src: "/projects/linked-in-ui/preview.png.jpeg",
+            alt: "Landing Page",
+            label: "Landing"
+          },
+          {
+            src: "/projects/linked-in-ui/login.png.png",
+            alt: "Login Page",
+            label: "Login"
+          },
+          {
+            src: "/projects/linked-in-ui/signup.png.png",
+            alt: "Signup Page",
+            label: "Signup"
+          },
+          {
+            src: "/projects/linked-in-ui/hero.png.png",
+            alt: "Hero Page",
+            label: "Hero"
+          },
+          {
+            src: "/projects/linked-in-ui/footer.png.png",
+            alt: "Footer Page",
+            label: "Footer"
+          }
+        ]
       },
       impl: [
         {
-          tokens: [{ text: "CREATE INDEX CONCURRENTLY", className: "text-rose-500" }]
-        },
-        {
-          indent: 4,
-          tokens: [{ text: "idx_posts_user_feed ON posts(" }]
-        },
-        {
-          indent: 8,
-          tokens: [{ text: "user_id," }]
-        },
-        {
-          indent: 8,
           tokens: [
-            { text: "created_at " },
-            { text: "DESC", className: "text-rose-500" }
+            { text: "const ", className: "text-rose-400" },
+            { text: "createPost = ", className: "text-zinc-400" },
+            { text: "async ", className: "text-rose-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "content", className: "text-zinc-400" },
+            { text: ") ", className: "text-amber-400" },
+            { text: "=> ", className: "text-zinc-400" },
+            { text: "{", className: "text-amber-400" }
           ]
         },
         {
           indent: 4,
           tokens: [
-            { text: ") " },
-            { text: "WHERE ", className: "text-rose-500" },
-            { text: "status = " },
-            { text: "'active'", className: "text-teal-400" },
-            { text: ";" }
+            { text: "const ", className: "text-rose-400" },
+            { text: "response = ", className: "text-zinc-400" },
+            { text: "await ", className: "text-rose-400" },
+            { text: "fetch", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "`$", className: "text-rose-400" },
+            { text: "{", className: "text-amber-400" },
+            { text: "API_URL", className: "text-zinc-400" },
+            { text: "}", className: "text-amber-400" },
+            { text: "/posts`, ", className: "text-zinc-400" },
+            { text: "{", className: "text-amber-400" }
+          ]
+        },
+        {
+          indent: 8,
+          tokens: [
+            { text: "method: ", className: "text-zinc-400" },
+            { text: "\"POST\"", className: "text-emerald-400" },
+            { text: ",", className: "text-zinc-400" }
+          ]
+        },
+        {
+          indent: 8,
+          tokens: [
+            { text: "body: ", className: "text-zinc-400" },
+            { text: "JSON.stringify", className: "text-emerald-400" },
+            { text: "(", className: "text-amber-400" },
+            { text: "content", className: "text-zinc-400" },
+            { text: ")", className: "text-amber-400" }
+          ]
+        },
+        {
+          indent: 4,
+          tokens: [
+            { text: ");", className: "text-amber-400" }
+          ]
+        },
+        {
+          tokens: [
+            { text: "}", className: "text-amber-400" }
           ]
         }
       ],
       arch: {
-        title: "// SYSTEM DATA STREAM",
+        title: "// APPLICATION DATA FLOW",
         lines: [
           {
             tokens: [
-              { text: "React Client Feed", className: "text-white font-bold" },
-              { text: " ───► ", className: "text-zinc-800" },
-              { text: "Express Gateway", className: "text-emerald-400 font-bold" }
-            ]
+              { text: "USER", className: "text-white font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "React Client", className: "text-emerald-400 font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "Express API", className: "text-emerald-400 font-bold" },
+              { text: " ───► ", className: "text-zinc-700" },
+              { text: "MongoDB", className: "text-emerald-400 font-bold" },
+            ],
           },
           {
-            indent: 14,
-            tokens: [{ text: "│ (PostgreSQL query joins)", className: "text-zinc-700" }]
-          },
-          {
-            indent: 14,
-            tokens: [{ text: "▼", className: "text-zinc-700" }]
-          },
-          {
+            indent: 25,
             tokens: [
-              { text: "Redis Cache warming", className: "text-emerald-400 font-bold" },
-              { text: " ◄───► ", className: "text-zinc-800" },
-              { text: "Relational DB Node", className: "text-white font-bold" }
-            ]
-          }
+              { text: "│                   │", className: "text-zinc-700" },
+            ],
+          },
+          {
+            indent: 25,
+            tokens: [
+              { text: "├──► ", className: "text-zinc-700" },
+              { text: "Auth", className: "text-white font-bold" },
+              { text: "        ├──► ", className: "text-zinc-700" },
+              { text: "Auth Routes", className: "text-white font-bold" },
+            ],
+          },
+          {
+            indent: 25,
+            tokens: [
+              { text: "├──► ", className: "text-zinc-700" },
+              { text: "Feed", className: "text-white font-bold" },
+              { text: "        ├──► ", className: "text-zinc-700" },
+              { text: "Post Routes", className: "text-white font-bold" },
+            ],
+          },
+          {
+            indent: 25,
+            tokens: [
+              { text: "├──► ", className: "text-zinc-700" },
+              { text: "Posts", className: "text-white font-bold" },
+              { text: "       ├──► ", className: "text-zinc-700" },
+              { text: "Comment Routes", className: "text-white font-bold" },
+            ],
+          },
+          {
+            indent: 25,
+            tokens: [
+              { text: "├──► ", className: "text-zinc-700" },
+              { text: "Comments", className: "text-white font-bold" },
+              { text: "    ├──► ", className: "text-zinc-700" },
+              { text: "User Routes", className: "text-white font-bold" },
+            ],
+          },
+          {
+            indent: 25,
+            tokens: [
+              { text: "└──► ", className: "text-zinc-700" },
+              { text: "Profile", className: "text-white font-bold" },
+              { text: "     └──► ", className: "text-zinc-700" },
+              { text: "Profile Routes", className: "text-white font-bold" },
+            ],
+          },
         ],
       },
-      metric: [
-        { label: "Feed latency", value: "18ms", isAccent: true },
-        { label: "Redis Hit Ratio", value: "96.8%", isAccent: false },
-        { label: "DB Index load", value: "1,000,000 rows", isAccent: false },
-        { label: "Explain cost", value: "0.15ms", isAccent: true },
+      specs: [
+        { label: "TYPE", value: "SOCIAL_PLATFORM", isAccent: true },
+        { label: "FRONTEND", value: "REACT", isAccent: true },
+        { label: "BACKEND", value: "NODE_AND_EXPRESS", isAccent: true },
+        { label: "DATABASE", value: "MONGO_DB", isAccent: true },
+        { label: "AUTH", value: "JWT", isAccent: true },
+        { label: "STATUS", value: "LIVE", isAccent: true },
       ],
     },
     footerMetrics: {
-      left: "SCAN: INDEX_SCAN",
-      right: "INDEX: idx_posts_user_feed",
+      left: "AUTH: JWT",
+      right: "API: CONNECTED",
     },
   },
 ];

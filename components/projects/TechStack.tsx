@@ -4,7 +4,7 @@ interface TechStackProps {
 
 export default function TechStack({ technologies }: TechStackProps) {
   return (
-    <div className="flex flex-wrap gap-2 text-[10px] font-mono text-zinc-400">
+    <div className="flex flex-wrap gap-2 text-[10px] font-mono text-zinc-300">
       {technologies.map((tech, idx) => (
         <span
           key={idx}

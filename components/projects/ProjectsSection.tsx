@@ -10,13 +10,23 @@ import ProjectLinks from "./ProjectLinks";
 
 export default function ProjectsSection() {
   const [activeProjectId, setActiveProjectId] = useState<string>("json");
-  const [activeWorkspaceTabId, setActiveWorkspaceTabId] = useState<
-    "preview" | "impl" | "arch" | "metric"
-  >("preview");
+  const [workspaceTabs, setWorkspaceTabs] = useState<Record<string, "ui" | "impl" | "arch" | "specs">>({
+    "json": "ui",
+    "codebook": "ui",
+    "linkedin": "ui",
+  });
+
+  const activeWorkspaceTabId = workspaceTabs[activeProjectId];
 
   const handleSelectProject = (id: string) => {
     setActiveProjectId(id);
-    setActiveWorkspaceTabId("preview"); // Reset to preview tab on project switch
+  };
+
+  const handleWorkspaceTabChange = (tab: "ui" | "impl" | "arch" | "specs") => {
+    setWorkspaceTabs((prev) => ({
+      ...prev,
+      [activeProjectId]: tab,
+    }));
   };
 
   const activeProject =
@@ -43,7 +53,7 @@ export default function ProjectsSection() {
           <ProjectWorkspace
             project={activeProject}
             activeWorkspaceTabId={activeWorkspaceTabId}
-            onSelectWorkspaceTab={setActiveWorkspaceTabId}
+            onSelectWorkspaceTab={handleWorkspaceTabChange}
           />
         </div>
 
