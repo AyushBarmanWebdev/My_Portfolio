@@ -2,6 +2,7 @@ import Navbar from "../components/navigation/Navbar";
 import Hero from "../components/hero/Hero";
 import ProjectsSection from "../components/projects/ProjectsSection";
 import About from "../components/about";
+import Stack from "../components/stack";
 import RevealSection from "../components/motion/RevealSection";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <RevealSection><Hero /></RevealSection>
       <RevealSection><ProjectsSection /></RevealSection>
       <RevealSection><About /></RevealSection>
+      <RevealSection><Stack /></RevealSection>
     </main>
   );
 }
