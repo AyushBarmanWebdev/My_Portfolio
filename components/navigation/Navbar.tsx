@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
 
 export default function Navbar() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <div className="sticky top-6 z-40 max-w-7xl mx-auto px-4 md:px-0 w-full animate-fade-in-up delay-header">
+    <motion.div
+      className="sticky top-6 z-40 max-w-7xl mx-auto px-4 md:px-0 w-full animate-fade-in-up delay-header"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+    >
       <header
         className="bg-zinc-950/80 border border-zinc-900 backdrop-blur-xl rounded-custom px-6 py-3 flex items-center justify-between shadow-2xl"
       >
@@ -28,7 +38,7 @@ export default function Navbar() {
             href="#about"
             className="text-zinc-400 hover:text-zinc-100 transition-colors text-xs"
           >
-            /PHILOSOPHY
+            /ABOUT
           </Link>
           <Link
             href="#skills"
@@ -53,6 +63,6 @@ export default function Navbar() {
           </Link>
         </div>
       </header>
-    </div>
+    </motion.div>
   );
 }

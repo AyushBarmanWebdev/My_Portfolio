@@ -1,13 +1,23 @@
+"use client";
+
 import { Project } from "../../data/projects";
 import TechStack from "./TechStack";
+import { motion, useReducedMotion } from "motion/react";
 
 interface ProjectContentProps {
   project: Project;
 }
 
 export default function ProjectContent({ project }: ProjectContentProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <div className="lg:col-span-7 space-y-4 select-text border-b border-zinc-900 overflow-y-auto">
+    <motion.div
+      className="lg:col-span-7 space-y-4 select-text border-b border-zinc-900 overflow-y-auto"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+    >
       <h3 className="text-2xl font-bold text-white tracking-tight">
         {project.title}
       </h3>
@@ -32,6 +42,6 @@ export default function ProjectContent({ project }: ProjectContentProps) {
 
       {/* Tech Stack tag list */}
       <TechStack technologies={project.technologies} />
-    </div>
+    </motion.div>
   );
 }

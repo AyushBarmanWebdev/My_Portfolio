@@ -1,4 +1,5 @@
 import { Project } from "../../data/projects";
+import { motion, useReducedMotion } from "motion/react";
 
 interface ProjectTabsProps {
   projects: Project[];
@@ -11,6 +12,7 @@ export default function ProjectTabs({
   activeProjectId,
   onSelectProject,
 }: ProjectTabsProps) {
+  const shouldReduceMotion = useReducedMotion();
   const activeProject = projects.find((p) => p.id === activeProjectId);
 
   return (
@@ -28,7 +30,7 @@ export default function ProjectTabs({
           {projects.map((project) => {
             const isActive = project.id === activeProjectId;
             return (
-              <button
+              <motion.button
                 key={project.id}
                 onClick={() => onSelectProject(project.id)}
                 role="tab"
@@ -37,12 +39,14 @@ export default function ProjectTabs({
                   ? "bg-zinc-900/60 text-white border-b-2 border-b-emerald-400"
                   : "text-zinc-400 hover:bg-zinc-900/30 hover:text-zinc-300"
                   }`}
+                whileHover={shouldReduceMotion ? undefined : { y: -1 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               >
                 <span className={project.fileExtensionColor}>
                   {project.fileExtension}
                 </span>
                 <span>{project.fileName}</span>
-              </button>
+              </motion.button>
             );
           })}
         </div>

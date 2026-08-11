@@ -49,8 +49,9 @@ export default function ProjectsSection() {
 
         {/* Project Content Area */}
         <div className="bg-zinc-950/20 md:px-8 md:pt-8.5 grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <ProjectContent project={activeProject} />
+          <ProjectContent key={`content-${activeProject.id}`} project={activeProject} />
           <ProjectWorkspace
+            key={`workspace-${activeProject.id}`}
             project={activeProject}
             activeWorkspaceTabId={activeWorkspaceTabId}
             onSelectWorkspaceTab={handleWorkspaceTabChange}

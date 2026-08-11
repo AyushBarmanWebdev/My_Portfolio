@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Braces, Code } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 
 interface Tab {
   id: string;
@@ -24,6 +25,7 @@ function CodeLine({ number, children, }: { number: number; children: React.React
 
 export default function HeroTerminal() {
   const [activeTab, setActiveTab] = useState<string>("profile");
+  const shouldReduceMotion = useReducedMotion();
 
   const tabs: Tab[] = [
     {
@@ -55,7 +57,7 @@ export default function HeroTerminal() {
           {/* Tab List */}
           <div className="flex items-center" role="tablist">
             {tabs.map((tab) => (
-              <button
+              <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 role="tab"
@@ -64,10 +66,12 @@ export default function HeroTerminal() {
                   ? "bg-zinc-900/60 text-white border-b border-b-emerald-400"
                   : "text-zinc-500 hover:bg-zinc-900/20 hover:text-zinc-300"
                   }`}
+                whileHover={shouldReduceMotion ? undefined : { y: -1 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
               >
                 {tab.icon}
                 <span>{tab.name}</span>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>

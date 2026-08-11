@@ -1,6 +1,8 @@
 import Navbar from "../components/navigation/Navbar";
 import Hero from "../components/hero/Hero";
 import ProjectsSection from "../components/projects/ProjectsSection";
+import About from "../components/about";
+import RevealSection from "../components/motion/RevealSection";
 
 export default function Home() {
   return (
@@ -9,8 +11,9 @@ export default function Home() {
       <div className="absolute inset-0 dashboard-grid pointer-events-none z-0"></div>
 
       <Navbar />
-      <Hero />
-      <ProjectsSection />
+      <RevealSection><Hero /></RevealSection>
+      <RevealSection><ProjectsSection /></RevealSection>
+      <RevealSection><About /></RevealSection>
     </main>
   );
 }
